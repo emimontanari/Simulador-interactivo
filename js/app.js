@@ -29,5 +29,20 @@ function estado(resultado){
     return alert('LA NOTA NO PUEDE SER MAYOR A 10')
   }
 };
+function medallaSegunPuesto (resultado){
+
+  let medallas = ["Oro", "Plata", "Bronce","Seguí participando"];
+  
+     if (resultado <= 4) {
+   return medallas[3];
+    }else if(resultado <= 6){
+        return medallas[2]
+    }else if(resultado <= 8){
+        return medallas[1]
+    }else{
+        return medallas[0]
+}
+}
 
 estado(resultado)
+alert(medallaSegunPuesto(resultado))
