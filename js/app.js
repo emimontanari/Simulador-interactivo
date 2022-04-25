@@ -4,45 +4,48 @@ let primeraNota = parseInt(prompt('Ingrese la primera nota del alumno'));
 let segundaNota = parseInt(prompt('Ingrese la segunda nota del alumno'));
 let terceraNota = parseInt(prompt('Ingrese la tercera nota del alumno'));
 
-function promedio(primeraNota, segundaNota, terceraNota){
+const notas = [primeraNota, segundaNota,terceraNota];
+const promedio = notas.length
+//Sumar todas las notas mediante reduce
+let notasTotal = notas.reduce(function(acumulador, valorActual){
+    return acumulador + valorActual;
+});
 
-      let resultado = (primeraNota + segundaNota + terceraNota) / 3
-        
-      return resultado
+// sacar promedio de notasTotal dividido entre 3
+function  promedioNotas(notasTotal){
+    return Math.round(notasTotal / promedio);
+};
+let resultado = promedioNotas(notasTotal);
 
+
+alert(`El promedio de ${nombreAlumno} es ${resultado}`);// IMPRIMIR RESULTADO
+
+let aprobado = resultado >= 6 ? 'APROBADO' : 'DESAPROBADO';
+
+alert(`El estado de ${nombreAlumno} es ${aprobado}`);// IMPRIMIR EL ESTADO DEL ALUMNO
+
+
+//CREAR UN OBJETO CON LOS DATOS DEL ALUMNO Y IMPIMPRIMERLO
+class Alumno {
+    constructor(nombre,promedio,estado){
+        this.nombre = nombre;
+        this.promedio = promedio;
+        this.estado = estado;
+    }
 };
 
+const alumno = new Alumno(nombreAlumno,resultado,aprobado);
 
+console.log(alumno);
 
-let resultado = promedio(primeraNota, segundaNota, terceraNota);
+window.addEventListener('load', imprimirResultado);
 
+const div = document.querySelector('#resultado');
 
-alert(`El promedio de ${nombreAlumno} es ${resultado}`);
-
-
-function estado(resultado){
-  if(resultado <= 10 && resultado >=6){
-     return alert(`${nombreAlumno} esta APROBADO`)
-  }else if(resultado <=5){
-    return alert(`${nombreAlumno} esta DESAPROBADO`)
-  }else{
-    return alert('LA NOTA NO PUEDE SER MAYOR A 10')
-  }
+function imprimirResultado(){
+    div.innerHTML = `
+    <h1>Nombre del alumno: </h1> <span>${alumno.nombre}</span>
+    <h2>Promedio del alumno:</h2> <span>${alumno.promedio}</span>
+    <h3>${alumno.estado}</h3>
+    `;
 };
-function medallaSegunPuesto (resultado){
-
-  let medallas = ["Oro", "Plata", "Bronce","Seguí participando"];
-  
-     if (resultado <= 4) {
-   return medallas[3];
-    }else if(resultado <= 6){
-        return medallas[2]
-    }else if(resultado <= 8){
-        return medallas[1]
-    }else{
-        return medallas[0]
-}
-}
-
-estado(resultado)
-alert(medallaSegunPuesto(resultado))
