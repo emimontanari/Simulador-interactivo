@@ -90,6 +90,9 @@ input{
 #resultado  {
     margin-bottom: 40px;
 }
+.oculto{
+    display: none;
+}
 #resultado div {
     border: 1px solid #006E7F;
     text-align: center;
