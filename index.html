@@ -5,13 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emiliano Montanari</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
-        <h1>Simulador de notas alumnos</h1>
-            <div id="resultado">
+    <div class="container">
+        <div class="contenido">
+            <header class="header">
+                <h1 class="header-titulo">Simulacro notas</h1>
+            </header>
 
-            </div>
+            <form id="formulario" class="formulario">
+                <div class="formGrid">
+                    <div class="formUno">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+                        <label>Nota 1</label>
+                        <input type="number" name="nota1" min="0" max="10">
+                    </div>
+                    <div class="formDos">
+                        <label>Nota 2</label>
+                        <input type="number" name="nota2" min="0" max="10">
+                        <label>Nota 3</label>
+                        <input type="number" name="nota3" min="0" max="10">
+                    </div>
+                </div>
+                
+                <div class="contenedorBtn">
+                    <input type="submit" value="Enviar" class="boton">
+                </div>
+                <div id="resultado"></div>
+            </form>
+        </div>
     </div>
     <script src="/js/app.js"></script>
 </body>

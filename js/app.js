@@ -35,17 +35,28 @@ class Alumno {
 };
 
 const alumno = new Alumno(nombreAlumno,resultado,aprobado);
-
-console.log(alumno);
-
 window.addEventListener('load', imprimirResultado);
 
-const div = document.querySelector('#resultado');
+
+const formulario = document.querySelector('#formulario');
+
 
 function imprimirResultado(){
+  let div = document.createElement('div');
     div.innerHTML = `
-    <h1>Nombre del alumno: </h1> <span>${alumno.nombre}</span>
-    <h2>Promedio del alumno:</h2> <span>${alumno.promedio}</span>
-    <h3>${alumno.estado}</h3>
+        <p class="header"> Resultado </p>
+        <p class="font-bold"> Nombre: <span class="font-normal">${alumno.nombre} </span> </p>
+        <p class="font-bold"> Promedio: <span class="font-normal">${alumno.promedio} </span> </p>
+        <p class="font-bold"> Estado: <span id="status" class="font-normal">${alumno.estado} </span> </p>
     `;
+    const resultadoDiv = document.querySelector('#resultado');
+    resultadoDiv.appendChild(div);
+
+    let h3 = document.querySelector('#status');
+    if(alumno.estado === 'APROBADO'){
+      h3.classList.add('verde');
+      }else{
+        h3.classList.add('rojo');
+      }
 };
+
