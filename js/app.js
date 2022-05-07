@@ -1,81 +1,116 @@
-// sacar el promedio de nota final y decir si esta aprobado o no
-// let nombreAlumno = prompt('Ingrese el nombre del alumno');
-// let primeraNota = parseInt(prompt('Ingrese la primera nota del alumno'));
-// let segundaNota = parseInt(prompt('Ingrese la segunda nota del alumno'));
-// let terceraNota = parseInt(prompt('Ingrese la tercera nota del alumno'));
-
-// const notas = [primeraNota, segundaNota,terceraNota];
-// const promedio = notas.length
-// Sumar todas las notas mediante reduce
-// let notasTotal = notas.reduce(function(acumulador, valorActual){
-//     return acumulador + valorActual;
-// });
-
-// sacar promedio de notasTotal dividido entre 3
-// function  promedioNotas(notasTotal){
-//     return Math.round(notasTotal / promedio);
-// };
-// let resultado = promedioNotas(notasTotal);
-
-
-// alert(`El promedio de ${nombreAlumno} es ${resultado}`);// IMPRIMIR RESULTADO
-
-
-// alert(`El estado de ${nombreAlumno} es ${aprobado}`);// IMPRIMIR EL ESTADO DEL ALUMNO
-
-
-
-
-
-window.addEventListener('load', imprimirResultado);
-// Variables globales
+//Variables
+const div = document.querySelector('div');
 const formulario = document.querySelector('#formulario');
-// eventos
-formulario.addEventListener('submit', enviarFormulario);
-//funciones
-function enviarFormulario(e){
-  e.preventDefault();
-  let nombre = document.querySelector('#nombre').value;
-  let primeraNota = parseInt(document.querySelector('#nota1').value)
-  let segundaNota = parseInt(document.querySelector('#nota2').value)
-  let terceraNota = parseInt(document.querySelector('#nota3').value)
-  const notas = [primeraNota, segundaNota,terceraNota];
-  const promedio = notas.length
-  let notasTotal = notas.reduce(function(acumulador, valorActual){
-    return acumulador + valorActual;
-  });
-  function  promedioNotas(notasTotal){
-    return Math.round(notasTotal / promedio);
-  }
-  const resultado = promedioNotas(notasTotal);
-  const estado = resultado >= 6 ? 'APROBADO' : 'DESAPROBADO';
+const nombre = document.querySelector('#nombre');
+const apellido = document.querySelector('#apellido');
+const curso = document.querySelector('#curso');
+const nota1 = document.querySelector('#nota1');
+const nota2 = document.querySelector('#nota2');
+const nota3 = document.querySelector('#nota3');
+let alumnos = [];
 
-  imprimirResultado(nombre,resultado,estado);
-  // ocultar los resultados hasta que se envie el formulario
-  const contenedorResultado = document.querySelector('#resultado');
-  contenedorResultado.classList.remove('oculto');
-  
+//Eventos
+
+eventsListeners();
+
+function eventsListeners(){
+
+    formulario.addEventListener('submit', agregarAlumno);
+    document.addEventListener('DOMContentLoaded', ()=>{
+
+        alumnos = JSON.parse(localStorage.getItem('alumnos')) || [];
+        console.log(alumnos);
+        imprimirHTML();
+    });
 };
 
-function imprimirResultado(nombre,promedio,estado){
-  // vaciar el contenido del div
-  const contenedorResultado = document.querySelector('#resultado');
-  contenedorResultado.innerHTML = '';
 
-  let div = document.createElement('div');
-  div.innerHTML = `
-  <p class="header"> Resultado </p>
-  <p class="font-bold"> Nombre: <span class="font-normal">${nombre} </span> </p>
-  <p class="font-bold"> Promedio: <span class="font-normal">${promedio} </span> </p>
-        <p class="font-bold"> Estado: <span id="status" class="font-normal">${estado} </span> </p>
-    `;
-    const resultadoDiv = document.querySelector('#resultado');
-    resultadoDiv.appendChild(div);
 
-    let h3 = document.querySelector('#status');
-    if(estado === 'APROBADO'){
-      h3.classList.add('verde');
-      }else{
-        h3.classList.add('rojo');
-      }
+function agregarAlumno(e){
+    e.preventDefault();
+    
+    //Crear objeto alumno
+    const alumno = {
+        nombres: nombre.value,
+        apellidos: apellido.value,
+        notas: [parseInt(nota1.value),parseInt(nota2.value),parseInt(nota3.value)]
+    };
+    const promedio = sacarPromedio(alumno.notas);
+    alumno.promedio = promedio;
+    alumno.estado = estadoAlumno(promedio);
+    //Agregar al array de alumnos
+    alumnos = [...alumnos,alumno];
+    //Imprimir en el HTML
+    imprimirHTML();
+    //Limpiar el formulario
+    formulario.reset();
+}
+
+
+//Funcion para sacar el promedio
+function sacarPromedio(notas){
+    let suma = 0;
+    for(let i = 0; i < notas.length; i++){
+        suma += notas[i];
+    }
+    return Math.round(suma / notas.length);
 };
+
+// funcion para sacar estado del alumno
+function estadoAlumno(promedio){
+    if(promedio >= 6){
+        return "APROBADO";
+    }else{
+        return "DESAPROBADO";
+    }
+}
+
+const rowResultados = document.querySelector('#rowResultados');
+const table = document.querySelector('#table');
+const tbody = document.querySelector('#tbody');
+
+function imprimirHTML(){
+    
+    if(alumnos.length > 0){
+
+        limpiarTabla();
+
+        alumnos.forEach(alumno => {
+            const {nombres, apellidos, notas, promedio, estado} = alumno;
+            
+            const row = document.createElement('tr');
+            //imprimir los resultados en columnas
+            row.innerHTML += `
+            <td>${nombres}</td>
+            <td>${apellidos}</td>
+            <td>${notas[1]}</td>
+            <td>${notas[2]}</td>
+            <td>${notas[2]}</td>
+            <td>${promedio}</td>
+            <td>${estado}</td>
+            `;
+            tbody.appendChild(row);
+            if(alumno.estado === "APROBADO"){
+                row.style.backgroundColor = "green";
+            }else{
+                row.style.backgroundColor = "red";
+            }
+        });
+    };
+    sincronizarStorage();
+};
+
+//TODO:validar el formulario
+
+
+
+//TODO:agregar storage
+function sincronizarStorage(){
+    localStorage.setItem('alumnos', JSON.stringify(alumnos));
+};
+
+function limpiarTabla(){
+    while(tbody.firstChild){
+        tbody.removeChild(tbody.firstChild);
+    }
+}
