@@ -3,23 +3,19 @@ const div = document.querySelector('div');
 const formulario = document.querySelector('#formulario');
 const nombre = document.querySelector('#nombre');
 const apellido = document.querySelector('#apellido');
-const curso = document.querySelector('#curso');
 const nota1 = document.querySelector('#nota1');
 const nota2 = document.querySelector('#nota2');
 const nota3 = document.querySelector('#nota3');
 let alumnos = [];
 
 //Eventos
-
 eventsListeners();
 
 function eventsListeners(){
 
     formulario.addEventListener('submit', agregarAlumno);
     document.addEventListener('DOMContentLoaded', ()=>{
-
         alumnos = JSON.parse(localStorage.getItem('alumnos')) || [];
-        console.log(alumnos);
         imprimirHTML();
     });
 };
@@ -40,10 +36,29 @@ function agregarAlumno(e){
     alumno.estado = estadoAlumno(promedio);
     //Agregar al array de alumnos
     alumnos = [...alumnos,alumno];
-    //Imprimir en el HTML
-    imprimirHTML();
-    //Limpiar el formulario
-    formulario.reset();
+
+    const alertaPrevia = document.querySelector('.alerta');
+    if(alertaPrevia){
+        alertaPrevia.remove();
+    }
+    const alerta = document.createElement('div');
+    alerta.classList.add('alerta');
+
+    if(nombre.value === "" || apellido.value === "" || nota1.value === "" || nota2.value === "" || nota3.value === ""){
+
+        alerta.textContent = "Por favor, llene todos los campos";
+        alerta.classList.add('error');
+        
+    }else{
+        alerta.textContent = "Alumno agregado";
+        alerta.classList.add('exito');
+        //Imprimir en el HTML
+        imprimirHTML();
+        //Limpiar el formulario
+        formulario.reset();
+    }
+
+    formulario.appendChild(alerta);
 }
 
 
@@ -90,6 +105,8 @@ function imprimirHTML(){
             <td>${estado}</td>
             `;
             tbody.appendChild(row);
+            
+
             if(alumno.estado === "APROBADO"){
                 row.style.backgroundColor = "green";
             }else{
@@ -101,7 +118,7 @@ function imprimirHTML(){
 };
 
 //TODO:validar el formulario
-
+//TODO: 
 
 
 //TODO:agregar storage
