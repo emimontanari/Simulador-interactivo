@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "toastify-js": "^1.11.2"
+  },
+  "name": "js-emiliano-montanari",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emimontanari/Simulador-interactivo.git"
+  },
+  "author": "Emiliano Montanari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emimontanari/Simulador-interactivo/issues"
+  },
+  "homepage": "https://github.com/emimontanari/Simulador-interactivo#readme",
+  "description": ""
+}

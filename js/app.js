@@ -7,7 +7,6 @@ const nota1 = document.querySelector('#nota1');
 const nota2 = document.querySelector('#nota2');
 const nota3 = document.querySelector('#nota3');
 let alumnos = [];
-
 //Eventos
 eventsListeners();
 
@@ -45,15 +44,43 @@ function agregarAlumno(e){
     alerta.classList.add('alerta');
 
     if(nombre.value === "" || apellido.value === "" || nota1.value === "" || nota2.value === "" || nota3.value === ""){
-
         alerta.textContent = "Por favor, llene todos los campos";
         alerta.classList.add('error');
         
     }else{
-        alerta.textContent = "Alumno agregado";
-        alerta.classList.add('exito');
+        Toastify({
+            text: "Corriguiendo alumno...⌛️",
+            className: "info",
+            duration: 2400,
+            style: {
+              background: "#112B3C",
+              color:"#EFEFEF",
+              fontSize: "1rem",
+              textAlign: "center",
+              fontWeight: "bold",
+              width: "270px",
+            }
+          }).showToast();
+        // alerta.textContent = "Alumno agregado";
+        // alerta.classList.add('exito');
         //Imprimir en el HTML
-        imprimirHTML();
+        setTimeout(() => {
+            imprimirHTML();
+            Toastify({
+                text: "Alumno Corregido ✅",
+                className: "info",
+                duration: 2500,
+                style: {
+                  background: "#9EDE73",
+                  color:"#fff",
+                  fontSize: "1rem",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  width: "270px",
+                }
+              }).showToast();
+        }, 2700);
+        
         //Limpiar el formulario
         formulario.reset();
     }
@@ -117,11 +144,7 @@ function imprimirHTML(){
     sincronizarStorage();
 };
 
-//TODO:validar el formulario
-//TODO: 
-
-
-//TODO:agregar storage
+//agregar storage
 function sincronizarStorage(){
     localStorage.setItem('alumnos', JSON.stringify(alumnos));
 };
@@ -130,4 +153,7 @@ function limpiarTabla(){
     while(tbody.firstChild){
         tbody.removeChild(tbody.firstChild);
     }
-}
+};
+
+//TODO:
+// ! AGREGAR LIBRERIA
