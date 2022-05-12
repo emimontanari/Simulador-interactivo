@@ -49,7 +49,7 @@ function agregarAlumno(e){
         
     }else{
         Toastify({
-            text: "Corriguiendo alumno...⌛️",
+            text: "Corriguiendo alumno... ⌛️",
             className: "info",
             duration: 2400,
             style: {
@@ -71,7 +71,7 @@ function agregarAlumno(e){
                 className: "info",
                 duration: 2500,
                 style: {
-                  background: "#9EDE73",
+                  background: "#4E9F3D",
                   color:"#fff",
                   fontSize: "1rem",
                   textAlign: "center",
@@ -155,5 +155,10 @@ function limpiarTabla(){
     }
 };
 
+
 //TODO:
-// ! AGREGAR LIBRERIA
+//! Agregar FETCH AL PROYECTO
+
+
+
+
